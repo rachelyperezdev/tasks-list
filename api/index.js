@@ -1,7 +1,7 @@
 import express from 'express'
 import serverless from "serverless-http"
 import cors from 'cors';
-import { fetchTasks, createTask, updateTask, deleteTask } from './task'
+import { fetchTasks, createTask, updateTask, deleteTask } from './task.js'
 
 const app = express()
 const port = 3001
@@ -16,7 +16,7 @@ app.get('/', (req, res) => {
     res.send('Hello world!')
 })
 
-app.get('/task', async (req, res) => {
+app.get('/tasks', async (req, res) => {
     try {
         const tasks =  await fetchTasks()
 
