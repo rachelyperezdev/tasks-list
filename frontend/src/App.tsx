@@ -4,7 +4,7 @@ import AddTaskForm from './components/AddTaskForm';
 import Task from './components/Task';
 import axios from 'axios';
 import { useEffect, useState } from 'react';
-import { API_URL } from './utils';
+import { getApiUrl } from './utils';
 
 const darkTheme = createTheme({
   palette: {
@@ -23,7 +23,8 @@ export default function App() {
 
   const fetchTasks = async () => {
     try {
-      const  { data } = await axios.get(API_URL);
+      const url = getApiUrl("/tasks");
+      const  { data } = await axios.get(url);
 
       setTasks(data)
     } catch(err) {

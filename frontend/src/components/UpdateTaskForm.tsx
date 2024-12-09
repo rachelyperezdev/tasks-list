@@ -1,7 +1,7 @@
 import React, { useState } from 'react'
 import { Button, Dialog, DialogTitle, TextField } from '@mui/material'
 import CheckIcon from '@mui/icons-material/Check';
-import { API_URL } from '../utils';
+import { getApiUrl } from '../utils';
 import axios from 'axios';
 
 type TaskType = {
@@ -26,8 +26,14 @@ const UpdateTaskForm : React.FC<UpdateTaskFormProps> =
     const [taskName, setTaskName] = useState<string>('');
 
     const handleUpdateTaskName = async () => {
+        if(!taskName.trim()){
+            alert('Task name cannot be empty');
+            return;
+        }
+        
         try {
-            await axios.put(API_URL, {
+            const url = getApiUrl("/task");
+            await axios.put(url, {
                 id,
                 name: taskName,
                 completed: completed

@@ -3,14 +3,15 @@ import TextField from '@mui/material/TextField';
 import AddIcon from '@mui/icons-material/Add';
 import axios from "axios";
 import { useState } from 'react';
-import { API_URL } from '../utils';
+import { getApiUrl } from '../utils';
 
 const AddTaskForm = ({fetchTasks} : {fetchTasks: () => void}) => {
-    const  [newTask, setNewTask] = useState<String>("");
+    const  [newTask, setNewTask] = useState<string>("");
 
     const addNewTask = async () => {
       try {
-        await axios.post(API_URL,  {
+        const url = getApiUrl("/task");
+        await axios.post(url,  {
           name: newTask,
           completed: false
         })
@@ -19,7 +20,8 @@ const AddTaskForm = ({fetchTasks} : {fetchTasks: () => void}) => {
 
         setNewTask('')
       } catch(err){
-        console.log(err)
+        console.log(`Error adding a new task ${err}`)
+        alert("Failed to add a new task. Please try again.");
       }
     }
 

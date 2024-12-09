@@ -8,9 +8,9 @@ const port = 3001
 
 app.use(express.json())
 
-if(process.env.DEVELOPMENT){
+if (process.env.DEVELOPMENT) {
     app.use(cors());
-}
+  }
 
 app.get('/', (req, res) => {
     res.send('Hello world!')
@@ -29,7 +29,7 @@ app.get('/tasks', async (req, res) => {
 app.post('/task', async (req, res) => {
     try {
         const task = req.body;
-
+        console.log('Task received:', task); 
         const response = await createTask(task)
 
         res.send(response)

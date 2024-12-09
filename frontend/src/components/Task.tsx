@@ -5,7 +5,7 @@ import { useState } from 'react'
 import UpdateTaskForm from './UpdateTaskForm';
 import classnames from 'classnames';
 import axios from "axios";
-import { API_URL } from '../utils';
+import { getApiUrl } from '../utils';
 
 type TaskType = {
     id: number,
@@ -21,7 +21,8 @@ const Task = ({task, fetchTasks} : {task : TaskType, fetchTasks : () => void}) =
   
     const handleUpdateTaskCompletion = async () => {
         try{
-            await axios.put(API_URL, {
+            const url = getApiUrl("/task");
+            await axios.put(url, {
                 id, 
                 name, 
                 completed: !completed
@@ -35,7 +36,8 @@ const Task = ({task, fetchTasks} : {task : TaskType, fetchTasks : () => void}) =
 
     const handleDeleteTask = async () => {
         try {
-            await axios.delete(`${API_URL}/${task.id}`)
+            const url = getApiUrl("/task");
+            await axios.delete(`${url}/${task.id}`)
 
             await fetchTasks()
         } catch(err){
@@ -55,7 +57,7 @@ const Task = ({task, fetchTasks} : {task : TaskType, fetchTasks : () => void}) =
         <Button variant='contained' onClick={() => setIsDialogOpen(true)}>
             <EditIcon/>
         </Button>
-        <Button color='error' variant='contained' onClick={() => handleDeleteTask}>
+        <Button color='error' variant='contained' onClick={handleDeleteTask}>
             <DeleteIcon/>
         </Button>
         </div>
